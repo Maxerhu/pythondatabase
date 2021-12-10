@@ -1,0 +1,23 @@
+from web3 import Web3
+from web3 import eth
+infura_url = "https://rinkeby.infura.io/v3/2d221cbc72cf44d8a8262d495d59aa77"
+web3 = Web3(Web3.HTTPProvider(infura_url))
+#адресса, балансы, ключи
+balance = web3.eth.getBalance("0xBbF1B04990DCD51a5b9685E5Da74A67089618677")
+address_cont = '0xC563817c84D60ea9A92b319CD40EC03C63ac066A'
+close_key = 'cd43a0a851bc7c6ebbae3412be6d24b9e5420052f77467dcdd91a9eb7c2653a9'
+
+
+print(web3.fromWei(balance, "ether"))
+abi_cont = [{"inputs":[],"name":"createDatabase","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"payable","type":"function"},{"inputs":[{"internalType":"uint256","name":"id","type":"uint256"}],"name":"getDatabase","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"}]
+database_contract= web3.eth.contract(
+    address=address_cont,
+    abi=abi_cont
+)
+createDatabase = database_contract.functions.createDatabase().call({
+    'value': 0
+})
+print(createDatabase)
+sign_txt = eth.Account.sign_transaction(createDatabase, close_key)
+hash_txn = web3.eth.sendRawTransaction(sign_txt.rawTransaction)
+print(hash_txn.hex())
