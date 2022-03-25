@@ -1,27 +1,17 @@
 from web3 import Web3
 from web3 import eth
-infura_url = "https://rinkeby.infura.io/v3/2d221cbc72cf44d8a8262d495d59aa77"
+infura_url = "https://rinkeby.infura.io/v3/75e2f5d655e24741aa5d9f9dbb1be620"
 web3 = Web3(Web3.HTTPProvider(infura_url))
 #адресса, балансы, ключи
-balance = web3.eth.getBalance("0xBbF1B04990DCD51a5b9685E5Da74A67089618677")
-address_cont = '0xC563817c84D60ea9A92b319CD40EC03C63ac066A'
-close_key = 'cd43a0a851bc7c6ebbae3412be6d24b9e5420052f77467dcdd91a9eb7c2653a9'
-print(web3.fromWei(balance, "ether"))
-abi_cont = [{"inputs":[],"name":"createDatabase","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"payable","type":"function"},{"inputs":[{"internalType":"uint256","name":"id","type":"uint256"}],"name":"getDatabase","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"}]
+address_cont = '0x605c452c819d2A29ABb172423F33eff8BB76296F'
+abi_cont = [{"inputs":[],"name":"createDatabase","outputs":[],"stateMutability":"payable","type":"function"},{"inputs":[{"internalType":"uint256","name":"idDatabase","type":"uint256"},{"internalType":"string","name":"login","type":"string"},{"internalType":"string","name":"password","type":"string"}],"name":"createUserDatabase","outputs":[],"stateMutability":"payable","type":"function"},{"inputs":[],"name":"getCount","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"id","type":"uint256"}],"name":"getDatabase","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"id","type":"uint256"}],"name":"getLainDatabase","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"idDatabase","type":"uint256"},{"internalType":"uint256","name":"idUser","type":"uint256"}],"name":"getLoginDatabase","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"idDatabase","type":"uint256"},{"internalType":"uint256","name":"idUser","type":"uint256"}],"name":"getPasswordDatabase","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"idUser","type":"uint256"},{"internalType":"uint256","name":"idDatabase","type":"uint256"}],"name":"getUsersDatabase","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"}]
 database_contract= web3.eth.contract(
     address=address_cont,
     abi=abi_cont
 )
-createDatabase = database_contract.functions.createDatabase().call({
-    'value': 0
+def createDatabase():
+      createDatabase=database_contract.functions.createDatabase().call({
+    
 })
-print(createDatabase)
-getDatabase =database_contract.functions.getDatabase().buildTransaction({
-    'chainId': 4,
-    'gas': 30000,
-    'gasPrice': web3.eth.gasPrice,
-    'nonce': web3.eth.getTransactionCount(web3.eth.account),
-    'value': 0
-})
-signed_txn = web3.eth.account.signTransaction(getDatabase, close_key=close_key)
-web3.eth.sendRawTransaction(signed_txn.rawTransaction)
+print(createDatabase())
+pass
